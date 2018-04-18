@@ -1,0 +1,18 @@
+version: '2'
+services:
+  ldap:
+    image: osixia/openldap:1.2.0
+    container_name: ldap
+    command: --copy-service
+    environment:
+      LDAP_SSL_HELPER_PREFIX: "ldap"
+      LDAP_TLS_VERIFY_CLIENT: "never"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./ldif:/container/service/slapd/assets/config/bootstrap/ldif/custom
+    ports:
+      - "389:389"
+      - "636:636"
+    domainname: "ldap.example.org" # important: same as hostname
+    hostname: "ldap.example.org"
